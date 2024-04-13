@@ -28,7 +28,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
             ""id"": ""ba4b12d6-fb47-49c3-9419-28b37968b444"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Mouse Click"",
                     ""type"": ""Button"",
                     ""id"": ""b9d6bcf9-de17-4bf0-8ae9-495aaa25eca0"",
                     ""expectedControlType"": ""Button"",
@@ -41,11 +41,11 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""19cb3345-c528-4d2c-8ea2-0186de5d2803"",
-                    ""path"": """",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Mouse Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -56,7 +56,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
 }");
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
+        m_UI_MouseClick = m_UI.FindAction("Mouse Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +118,12 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_Newaction;
+    private readonly InputAction m_UI_MouseClick;
     public struct UIActions
     {
         private @DefaultControls m_Wrapper;
         public UIActions(@DefaultControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_UI_Newaction;
+        public InputAction @MouseClick => m_Wrapper.m_UI_MouseClick;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -133,16 +133,16 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @MouseClick.started += instance.OnMouseClick;
+            @MouseClick.performed += instance.OnMouseClick;
+            @MouseClick.canceled += instance.OnMouseClick;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @MouseClick.started -= instance.OnMouseClick;
+            @MouseClick.performed -= instance.OnMouseClick;
+            @MouseClick.canceled -= instance.OnMouseClick;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -162,6 +162,6 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
     public UIActions @UI => new UIActions(this);
     public interface IUIActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnMouseClick(InputAction.CallbackContext context);
     }
 }
