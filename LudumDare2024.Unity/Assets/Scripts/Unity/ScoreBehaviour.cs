@@ -7,8 +7,6 @@ using Zenject;
 public class ScoreBehaviour : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI linesText;
-    [SerializeField]
     TextMeshProUGUI scoreText;
 
     ILineScoringService lineScoringService;
@@ -21,19 +19,22 @@ public class ScoreBehaviour : MonoBehaviour
 
     void OnValidate()
     {
-        if (linesText == null)
-        {
-            Debug.LogError("Lines text is not set.", this);
-        }
         if (scoreText == null)
         {
             Debug.LogError("Score text is not set.", this);
         }
     }
 
+    void Start()
+    {
+        UpdateScore();
+    }
+
     public void UpdateScore()
     {
-        linesText.text = $"Lines: {lineScoringService.GetLines()}";
-        scoreText.text = $"Score: {lineScoringService.GetScore()}";
+        var gradeLetter = lineScoringService.GetGradeLetter();
+        scoreText.text = $@"Lines: {lineScoringService.LineCount}
+Average Distance: {lineScoringService.AverageDistance}
+Score: {gradeLetter}";
     }
 }

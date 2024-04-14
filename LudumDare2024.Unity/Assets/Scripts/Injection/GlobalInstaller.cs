@@ -6,5 +6,6 @@ public class ProjectInstaller : MonoInstaller
     {
         Container.Bind<ISummoningService>().To<SummoningService>().AsSingle().NonLazy();
         Container.Bind<ILineScoringService>().To<LineScoringService>().AsSingle().NonLazy();
+        Container.Bind<IShapeGeneratorService>().To<ShapeGeneratorService>().AsSingle().NonLazy();
     }
 }
